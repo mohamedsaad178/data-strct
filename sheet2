@@ -1,0 +1,174 @@
+public class LinkedListNode {
+	public int value;
+	public LinkedListNode next;
+}
+public class MySpecialLinkedListUtils {
+	public static int count(LinkedListNode head) {
+		LinkedListNode i = head;
+		int counter=0;
+		while(i!= null) {
+			counter++;
+			i=i.next;
+		}
+		return counter;
+	}
+	
+	public static double[] summary(LinkedListNode head) {
+		 LinkedListNode i = head;
+		 int counter= count(head);
+		 double sum=0,average=0,median=0,max=0,min=0;
+		 double [] ans= new double[5];
+		 LinkedListNode t = i;
+		 while(t!= null) {
+			 sum+=t.value;
+			 t=t.next;
+		 }
+		 average=sum/counter;
+		 LinkedListNode s = i;
+		 for (int j=0;j<(counter/2);j++) {
+			 s=s.next;
+		 }
+		 if(counter%2==1) {
+			 s=s.next;
+			 median=s.value;
+		 }
+		 else {
+			 LinkedListNode z = s;
+			 z=z.next;
+			 median=(s.value+z.value)/2;
+		 }
+		 LinkedListNode y = i;
+		 while(y!=null) {
+			 if (y.value>max) {
+				 max=y.value;
+			 }
+			 y=y.next;
+		 }
+		 min=i.value;
+		 while(i!=null) {
+			 if (i.value<min) {
+				 min=i.value;
+			 }
+			 i=i.next;
+		 }
+		 ans[0]=sum;
+		 ans[1]=average;
+		 ans[2]=median;
+		 ans[3]=max;
+		 ans[4]=min;
+		 return ans;
+	 }
+	
+	public static LinkedListNode reverse(LinkedListNode head) {
+		LinkedListNode prevNode=null;
+		LinkedListNode nextNode;
+		LinkedListNode currentNode=head;
+		while(currentNode!=null) {
+			nextNode=currentNode.next;
+			currentNode.next=prevNode;
+			
+			currentNode=nextNode;
+			prevNode=currentNode;
+		}
+		return prevNode;
+	}
+	
+	public static LinkedListNode evenIndexedElements (LinkedListNode head) {
+		LinkedListNode t=head;
+		LinkedListNode i=t;
+		LinkedListNode j=i;
+		while(j.next!=null) {
+			j=j.next;
+			i.next=j.next;
+			i=i.next;
+			j=j.next;
+		}
+		i.next=null;
+		return t;
+	}
+	
+	public static LinkedListNode insertionSort(LinkedListNode head) {
+		if (head == null)
+	        return null;
+
+		LinkedListNode sortedList = head;
+	    head = head.next;
+	    sortedList.next = null;
+
+	    while(head != null) {
+	        final LinkedListNode current = head;
+	        head = head.next;
+
+	        if (current.value < sortedList.value) {
+	            current.next = sortedList;
+	            sortedList = current;
+	        } 
+	        else {
+	        	LinkedListNode search = sortedList;
+	            while(search.next != null && current.value > search.next.value)
+	                search = search.next;
+
+	            current.next = search.next;
+	            search.next = current;
+	        }
+	    }
+	    return sortedList;
+	}
+	
+	public static LinkedListNode removeCentralNode(LinkedListNode head) {
+		LinkedListNode i=head;
+		LinkedListNode s = i;
+		LinkedListNode t=i;
+		int counter= count(head);
+		 for (int j=0;j<(counter/2)-1;j++) {
+			 s=s.next;
+		 }
+		 if(counter%2==1) {
+			 i=s;
+			 s=s.next;
+			 i.next=s.next;
+		 }
+		 else {
+			 i=s;
+			 s=s.next;
+			 s=s.next;
+			 i.next=s.next;
+		 }
+		 return t;
+	}
+	public static boolean palindrome(LinkedListNode head) {
+		int counter= count(head);
+		LinkedListNode s=head;
+		 for (int j=0;j<(counter/2);j++) {
+			 s=s.next;
+		 }
+		 LinkedListNode second_half=s.next;
+		 LinkedListNode prev = null; 
+		 LinkedListNode current = second_half; 
+		 LinkedListNode next; 
+	        while (current != null)  
+	        { 
+	            next = current.next; 
+	            current.next = prev; 
+	            prev = current; 
+	            current = next; 
+	        } 
+	        second_half = prev; 
+	        
+	        LinkedListNode head1=head;
+	        LinkedListNode head2=second_half;
+	    while (head1!=null&&head2!=null) {
+	    	 if (head1.value == head2.value)  
+	            { 
+	                head1 = head1.next; 
+	                head2 = head2.next; 
+	            } else 
+	                return false; 
+	        } 
+	  
+	        if (head1 == null && head2 == null) 
+	            return true; 
+	  
+	        return false; 
+	}
+}
